@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igniubi.user.dao.IUserProfileDao">
+    <resultMap id="userMap" type="com.igniubi.user.model.UserProfile">
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="update_time" column="updateTime" jdbcType="INTEGER"/>
+        <result property="create_time" column="createTime" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    uid, mobile, email, password, update_time, create_time,status
+  </sql>
+
+    <select id="selectUserByPrimary" resultMap="userMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM user_profile
+        where uid = #{uid,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectUserByMobile" resultMap="userMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM user_profile
+        where mobile = #{mobile,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="uid" parameterType="com.igniubi.user.model.UserProfile">
+        insert into user_profile(mobile, email, password, create_time,status)
+          values (#{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{createTime,jdbcType=INTEGER},#{status,jdbcType=INTEGER})
+    </insert>
+
+
+    <!--<insert id="inserBatch"  parameterType="java.util.List">-->
+        <!--insert into user (id,name,age,gender,mobile)-->
+        <!--values-->
+        <!--<foreach collection="list" item="item" separator=",">-->
+            <!--(#{item.id},#{item.name},#{item.age},#{item.gender},#{item.mobile})-->
+        <!--</foreach>-->
+    <!--</insert>-->
+</mapper>
