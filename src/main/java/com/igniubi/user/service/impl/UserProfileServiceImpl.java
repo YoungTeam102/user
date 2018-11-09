@@ -3,7 +3,6 @@ package com.igniubi.user.service.impl;
 import com.igniubi.model.CommonRsp;
 import com.igniubi.model.user.request.RegisterReq;
 import com.igniubi.user.dao.IUserProfileDao;
-import com.igniubi.user.dao.IUserSessionDao;
 import com.igniubi.user.model.UserProfile;
 import com.igniubi.user.service.IUserProfleService;
 import com.igniubi.user.utils.DateUtil;
