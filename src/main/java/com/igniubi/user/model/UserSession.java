@@ -10,7 +10,7 @@ public class UserSession {
 
     private String sessionKey;
 
-    private Integer lastLoginTime;
+    private Integer lastTime;
 
     private Integer expireTime;
 }

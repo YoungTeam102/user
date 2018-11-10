@@ -1,7 +1,7 @@
 package com.igniubi.user.service.impl;
 
 import com.igniubi.model.CommonRsp;
-import com.igniubi.model.user.request.RegisterReq;
+import com.igniubi.model.user.request.RegisterReqBO;
 import com.igniubi.user.dao.IUserProfileDao;
 import com.igniubi.user.model.UserProfile;
 import com.igniubi.user.service.IUserProfleService;
@@ -23,7 +23,7 @@ public class UserProfileServiceImpl implements IUserProfleService {
 
 
     @Override
-    public CommonRsp register(RegisterReq registerReq) {
+    public CommonRsp register(RegisterReqBO registerReq) {
         logger.info("registerimpl register req is {}",registerReq);
         CommonRsp rsp = new CommonRsp();
         String mobile = registerReq.getMobile();

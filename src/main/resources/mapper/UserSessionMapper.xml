@@ -5,31 +5,31 @@
     <resultMap id="sessionMap" type="com.igniubi.user.model.UserSession">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="uid" column="uid" jdbcType="INTEGER"/>
-        <result property="sessionKey" column="sessionKey" jdbcType="VARCHAR"/>
-        <result property="last_login_time" column="lastLoginTime" jdbcType="INTEGER"/>
+        <result property="session_key" column="sessionKey" jdbcType="VARCHAR"/>
+        <result property="last_time" column="lastTime" jdbcType="INTEGER"/>
         <result property="expire_time" column="expireTime" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List" >
-    id, uid, sessionKey, last_login_time, expire_time
+    id, uid, sessionKey, last_time, expire_time
   </sql>
 
-    <select id="selectUserByPrimary" resultMap="sessionMap">
-        SELECT
-        <include refid="Base_Column_List"></include>
-        FROM user_session
-        where id = #{uid,jdbcType=INTEGER}
-    </select>
-
-    <select id="selectUserByMobile" resultMap="sessionMap">
+    <select id="selectSessionByPrimary" resultMap="sessionMap">
         SELECT
         <include refid="Base_Column_List"></include>
         FROM user_session
         where uid = #{uid,jdbcType=INTEGER}
     </select>
 
+    <select id="selectUid" resultType="java.lang.Integer">
+        SELECT
+        uid
+        FROM user_session
+        where session_key = #{sessionKey,jdbcType=VARCHAR}
+    </select>
+
     <insert id="insertUserSession"  parameterType="com.igniubi.user.model.UserSession">
-        insert into user_session(uid, sessionKey, last_login_time, expire_time)
-          values (#{uid,jdbcType=INTEGER}, #{sessionKey,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=INTEGER}, #{expireTime,jdbcType=INTEGER})
+        insert into user_session(uid, session_key, last_time, expire_time)
+          values (#{uid,jdbcType=INTEGER}, #{sessionKey,jdbcType=VARCHAR}, #{lastTime,jdbcType=INTEGER}, #{expireTime,jdbcType=INTEGER})
     </insert>
 
 
@@ -37,12 +37,12 @@
         update user_session
         <set >
             <if test="sessionKey != null" >
-                sessionKey = #{sessionKey,jdbcType=VARCHAR},
+                session_key = #{sessionKey,jdbcType=VARCHAR},
             </if>
-            <if test="lastLoginTime != null" >
-                last_login_time = #{lastLoginTime,jdbcType=INTEGER},
+            <if test="lastTime != null" >
+                last_time = #{lastTime,jdbcType=INTEGER},
             </if>
-            <if test="updateTime != null" >
+            <if test="expireTime != null" >
                 expire_time = #{expireTime,jdbcType=INTEGER},
             </if>
         </set>

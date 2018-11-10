@@ -1,7 +1,7 @@
 package com.igniubi.user.controller;
 
 import com.igniubi.model.CommonRsp;
-import com.igniubi.model.user.request.RegisterReq;
+import com.igniubi.model.user.request.RegisterReqBO;
 import com.igniubi.user.service.IUserProfleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +14,11 @@ public class RegisterRest {
     private final Logger logger = LoggerFactory.getLogger(RegisterRest.class);
 
     @Autowired
-    IUserProfleService userProfleService;
+    private IUserProfleService userProfleService;
 
     @RequestMapping("/register")
     @ResponseBody
-        public CommonRsp register(@RequestBody RegisterReq registerReq){
+        public CommonRsp register(@RequestBody RegisterReqBO registerReq){
         logger.info("register req is {}", registerReq);
         return userProfleService.register(registerReq);
 
