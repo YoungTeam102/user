@@ -21,6 +21,16 @@ public class RegisterRest {
         public CommonRsp register(@RequestBody RegisterReqBO registerReq){
         logger.info("register req is {}", registerReq);
         return userProfleService.register(registerReq);
+    }
 
+    @RequestMapping("/asynTest")
+    public CommonRsp asynTest(@RequestBody RegisterReqBO registerReq){
+        logger.info("register req is {}", registerReq);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new CommonRsp();
     }
 }
