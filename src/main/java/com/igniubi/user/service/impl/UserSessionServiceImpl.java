@@ -1,9 +1,9 @@
 package com.igniubi.user.service.impl;
 
 
-import com.igniubi.redis.util.RedisKeyBuilder;
-import com.igniubi.redis.util.RedisUtil;
+import com.igniubi.redis.operations.RedisValueOperations;
 import com.igniubi.model.common.RedisKeyEnum;
+import com.igniubi.redis.util.RedisOperationsUtil;
 import com.igniubi.user.dao.IUserSessionDao;
 import com.igniubi.user.service.IUserSessionService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +18,8 @@ public class UserSessionServiceImpl implements IUserSessionService {
     private final Logger logger = LoggerFactory.getLogger(UserSessionServiceImpl.class);
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisValueOperations redisValueOperations;
+
     @Autowired
     private IUserSessionDao userSessionDao;
 
@@ -28,16 +29,17 @@ public class UserSessionServiceImpl implements IUserSessionService {
         if(StringUtils.isBlank(sessionKey)){
             return null;
         }
-        RedisKeyBuilder keyBuilder = RedisKeyBuilder.newInstance().appendFixed(RedisKeyEnum.USER_SESSION.getCacheKey()).appendFixed(sessionKey);
-        Integer uid = redisUtil.get(keyBuilder, Integer.class);
-        if(uid != null){
-            return uid;
-        }
-
-        uid = userSessionDao.selectUid(sessionKey);
-        if(uid != null){
-            redisUtil.set(keyBuilder, uid,RedisKeyEnum.USER_SESSION.getCacheTime(), RedisKeyEnum.USER_SESSION.getTimeUnit() );
-        }
+//        RedisKeyBuilder keyBuilder = RedisKeyBuilder.newInstance().appendFixed(RedisKeyEnum.USER_SESSION.getCacheKey()).appendFixed(sessionKey);
+//        Integer uid = redisValueOperations.get(keyBuilder, Integer.class);
+//        if(uid != null){
+//            return uid;
+//        }
+//
+//        uid = userSessionDao.selectUid(sessionKey);
+//        if(uid != null){
+//            redisValueOperations.set(keyBuilder, uid,RedisKeyEnum.USER_SESSION.getCacheTime(), RedisKeyEnum.USER_SESSION.getTimeUnit() );
+//        }
+        Integer uid = RedisOperationsUtil.cacheObtain(redisValueOperations, RedisKeyEnum.USER_SESSION, sessionKey, () ->userSessionDao.selectUid(sessionKey), Integer.class);
         logger.info(" UserSessionServiceImpl getUid success , sessionKey is {}, uid is {}", sessionKey, uid);
         return uid;
     }

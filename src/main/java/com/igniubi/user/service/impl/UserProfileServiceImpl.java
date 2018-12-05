@@ -3,8 +3,9 @@ package com.igniubi.user.service.impl;
 import com.igniubi.model.CommonRsp;
 import com.igniubi.model.user.request.RegisterReqBO;
 import com.igniubi.model.user.request.UserProfileReqBO;
-import com.igniubi.redis.util.RedisUtil;
+import com.igniubi.redis.operations.RedisValueOperations;
 import com.igniubi.model.common.RedisKeyEnum;
+import com.igniubi.redis.util.RedisOperationsUtil;
 import com.igniubi.user.dao.IUserProfileDao;
 import com.igniubi.user.model.UserProfile;
 import com.igniubi.user.service.IUserProfleService;
@@ -14,9 +15,8 @@ import com.igniubi.user.utils.PhoneUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.Callable;
 
 
 @Component
@@ -28,7 +28,7 @@ public class UserProfileServiceImpl implements IUserProfleService {
     IUserProfileDao userProfileDao;
 
     @Autowired
-    RedisUtil redisUtil;
+    RedisValueOperations valueOperations;
 
     @Override
     public CommonRsp register(RegisterReqBO registerReq) {
@@ -66,7 +66,7 @@ public class UserProfileServiceImpl implements IUserProfleService {
         if(uid == null || uid <1 ){
             return null;
         }
-        UserProfile profile = redisUtil.cacheObtain(RedisKeyEnum.USER_PROFILE, uid, () -> userProfileDao.selectUserByPrimary(uid), UserProfile.class );
+        UserProfile profile = RedisOperationsUtil.cacheObtain(valueOperations ,RedisKeyEnum.USER_PROFILE, uid, () ->userProfileDao.selectUserByPrimary(uid), UserProfile.class );
         logger.info("get profile success , profile is {}", profile);
         return profile;
     }
