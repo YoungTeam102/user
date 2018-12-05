@@ -1,4 +1,4 @@
-package com.igniubi.user;
+package com.igniubi;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

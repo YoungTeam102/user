@@ -1,6 +1,6 @@
-package com.igniubi.user.dao;
+package com.igniubi.dao;
 
-import com.igniubi.user.model.UserSession;
+import com.igniubi.model.UserSession;
 import org.apache.ibatis.annotations.Param;
 
 public interface IUserSessionDao {

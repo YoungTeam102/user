@@ -1,11 +1,11 @@
-package com.igniubi.user.service.impl;
+package com.igniubi.service.impl;
 
 
+import com.igniubi.dao.IUserSessionDao;
 import com.igniubi.redis.operations.RedisValueOperations;
 import com.igniubi.model.common.RedisKeyEnum;
 import com.igniubi.redis.util.RedisOperationsUtil;
-import com.igniubi.user.dao.IUserSessionDao;
-import com.igniubi.user.service.IUserSessionService;
+import com.igniubi.service.IUserSessionService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

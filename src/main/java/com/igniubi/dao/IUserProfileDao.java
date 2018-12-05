@@ -1,6 +1,6 @@
-package com.igniubi.user.dao;
+package com.igniubi.dao;
 
-import com.igniubi.user.model.UserProfile;
+import com.igniubi.model.UserProfile;
 import org.apache.ibatis.annotations.Param;
 
 public interface IUserProfileDao {

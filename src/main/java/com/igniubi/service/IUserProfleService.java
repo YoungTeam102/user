@@ -1,9 +1,9 @@
-package com.igniubi.user.service;
+package com.igniubi.service;
 
 import com.igniubi.model.CommonRsp;
+import com.igniubi.model.UserProfile;
 import com.igniubi.model.user.request.RegisterReqBO;
 import com.igniubi.model.user.request.UserProfileReqBO;
-import com.igniubi.user.model.UserProfile;
 
 public interface IUserProfleService {
 

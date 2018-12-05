@@ -1,4 +1,4 @@
-package com.igniubi.user.service;
+package com.igniubi.service;
 
 public interface IUserSessionService {
 

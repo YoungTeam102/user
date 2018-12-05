@@ -1,21 +1,20 @@
-package com.igniubi.user.service.impl;
+package com.igniubi.service.impl;
 
+import com.igniubi.dao.IUserProfileDao;
 import com.igniubi.model.CommonRsp;
+import com.igniubi.model.UserProfile;
 import com.igniubi.model.user.request.RegisterReqBO;
 import com.igniubi.model.user.request.UserProfileReqBO;
 import com.igniubi.redis.operations.RedisValueOperations;
 import com.igniubi.model.common.RedisKeyEnum;
 import com.igniubi.redis.util.RedisOperationsUtil;
-import com.igniubi.user.dao.IUserProfileDao;
-import com.igniubi.user.model.UserProfile;
-import com.igniubi.user.service.IUserProfleService;
-import com.igniubi.user.utils.DateUtil;
-import com.igniubi.user.utils.PasswordUtil;
-import com.igniubi.user.utils.PhoneUtil;
+import com.igniubi.service.IUserProfleService;
+import com.igniubi.utils.DateUtil;
+import com.igniubi.utils.PasswordUtil;
+import com.igniubi.utils.PhoneUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.stereotype.Component;
 
 

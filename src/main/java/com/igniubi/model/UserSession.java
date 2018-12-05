@@ -1,4 +1,4 @@
-package com.igniubi.user.model;
+package com.igniubi.model;
 
 import lombok.Data;
 

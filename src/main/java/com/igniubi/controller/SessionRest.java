@@ -1,7 +1,7 @@
-package com.igniubi.user.controller;
+package com.igniubi.controller;
 
 import com.igniubi.model.user.request.SessionReqBO;
-import com.igniubi.user.service.IUserSessionService;
+import com.igniubi.service.IUserSessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

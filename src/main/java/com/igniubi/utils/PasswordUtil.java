@@ -1,6 +1,5 @@
-package com.igniubi.user.utils;
+package com.igniubi.utils;
 
-import com.igniubi.user.controller.RegisterRest;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

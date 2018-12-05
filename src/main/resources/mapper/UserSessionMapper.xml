@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.igniubi.user.dao.IUserSessionDao">
-    <resultMap id="sessionMap" type="com.igniubi.user.model.UserSession">
+<mapper namespace="com.igniubi.dao.IUserSessionDao">
+    <resultMap id="sessionMap" type="com.igniubi.model.UserSession">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="uid" column="uid" jdbcType="INTEGER"/>
         <result property="session_key" column="sessionKey" jdbcType="VARCHAR"/>
@@ -27,13 +27,13 @@
         where session_key = #{sessionKey,jdbcType=VARCHAR}
     </select>
 
-    <insert id="insertUserSession"  parameterType="com.igniubi.user.model.UserSession">
+    <insert id="insertUserSession"  parameterType="com.igniubi.model.UserSession">
         insert into user_session(uid, session_key, last_time, expire_time)
           values (#{uid,jdbcType=INTEGER}, #{sessionKey,jdbcType=VARCHAR}, #{lastTime,jdbcType=INTEGER}, #{expireTime,jdbcType=INTEGER})
     </insert>
 
 
-    <update id="updateUserSesson"  parameterType="com.igniubi.user.model.UserSession">
+    <update id="updateUserSesson"  parameterType="com.igniubi.model.UserSession">
         update user_session
         <set >
             <if test="sessionKey != null" >
