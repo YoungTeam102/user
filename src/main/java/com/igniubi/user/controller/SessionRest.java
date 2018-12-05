@@ -19,7 +19,7 @@ public class SessionRest {
     @Autowired
     private IUserSessionService userSessionService;
 
-    @RequestMapping("getUid")
+    @RequestMapping("/getUid")
     @ResponseBody
     public Integer getUid(@RequestBody SessionReqBO reqBO){
         logger.info("enter SessionRest getUid ,req is {}",reqBO);

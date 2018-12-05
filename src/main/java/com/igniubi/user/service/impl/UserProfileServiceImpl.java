@@ -2,6 +2,9 @@ package com.igniubi.user.service.impl;
 
 import com.igniubi.model.CommonRsp;
 import com.igniubi.model.user.request.RegisterReqBO;
+import com.igniubi.model.user.request.UserProfileReqBO;
+import com.igniubi.redis.util.RedisUtil;
+import com.igniubi.model.common.RedisKeyEnum;
 import com.igniubi.user.dao.IUserProfileDao;
 import com.igniubi.user.model.UserProfile;
 import com.igniubi.user.service.IUserProfleService;
@@ -13,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.Callable;
+
+
 @Component
 public class UserProfileServiceImpl implements IUserProfleService {
 
@@ -21,6 +27,8 @@ public class UserProfileServiceImpl implements IUserProfleService {
     @Autowired
     IUserProfileDao userProfileDao;
 
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public CommonRsp register(RegisterReqBO registerReq) {
@@ -51,4 +59,17 @@ public class UserProfileServiceImpl implements IUserProfleService {
         logger.info("registerimpl register success, req is {}",registerReq);
         return rsp;
     }
+
+    @Override
+    public UserProfile getUserProfile(UserProfileReqBO userProfileReqBO) {
+        Integer uid = userProfileReqBO.getUid();
+        if(uid == null || uid <1 ){
+            return null;
+        }
+        UserProfile profile = redisUtil.cacheObtain(RedisKeyEnum.USER_PROFILE, uid, () -> userProfileDao.selectUserByPrimary(uid), UserProfile.class );
+        logger.info("get profile success , profile is {}", profile);
+        return profile;
+    }
+
+
 }
