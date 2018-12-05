@@ -1,7 +1,7 @@
 package com.igniubi.controller;
 
 import com.igniubi.model.CommonRsp;
-import com.igniubi.model.user.request.RegisterReqBO;
+import com.igniubi.model.dtos.user.req.RegisterReqBO;
 import com.igniubi.service.IUserProfleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

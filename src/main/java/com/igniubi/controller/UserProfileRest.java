@@ -2,7 +2,7 @@ package com.igniubi.controller;
 
 import com.igniubi.model.CommonRsp;
 import com.igniubi.model.UserProfile;
-import com.igniubi.model.user.request.UserProfileReqBO;
+import com.igniubi.model.dtos.user.req.UserProfileReqBO;
 import com.igniubi.service.IUserProfleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

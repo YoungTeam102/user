@@ -2,8 +2,8 @@ package com.igniubi.service.impl;
 
 
 import com.igniubi.dao.IUserSessionDao;
+import com.igniubi.model.enums.common.RedisKeyEnum;
 import com.igniubi.redis.operations.RedisValueOperations;
-import com.igniubi.model.common.RedisKeyEnum;
 import com.igniubi.redis.util.RedisOperationsUtil;
 import com.igniubi.service.IUserSessionService;
 import org.apache.commons.lang3.StringUtils;
