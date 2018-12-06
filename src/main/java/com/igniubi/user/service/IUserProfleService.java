@@ -1,7 +1,7 @@
-package com.igniubi.service;
+package com.igniubi.user.service;
 
 import com.igniubi.model.CommonRsp;
-import com.igniubi.model.UserProfile;
+import com.igniubi.user.model.UserProfile;
 import com.igniubi.model.dtos.user.req.RegisterReqBO;
 import com.igniubi.model.dtos.user.req.UserProfileReqBO;
 

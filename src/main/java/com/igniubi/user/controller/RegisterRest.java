@@ -1,8 +1,8 @@
-package com.igniubi.controller;
+package com.igniubi.user.controller;
 
 import com.igniubi.model.CommonRsp;
 import com.igniubi.model.dtos.user.req.RegisterReqBO;
-import com.igniubi.service.IUserProfleService;
+import com.igniubi.user.service.IUserProfleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

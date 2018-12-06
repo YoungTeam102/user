@@ -1,33 +1,35 @@
-package com.igniubi.service.impl;
+package com.igniubi.user.service.impl;
 
-import com.igniubi.dao.IUserProfileDao;
+import com.igniubi.user.mapper.IUserProfileMapper;
+import com.igniubi.user.model.UserProfile;
+import com.igniubi.user.service.IUserProfleService;
+import com.igniubi.user.utils.DateUtil;
+import com.igniubi.user.utils.PasswordUtil;
+import com.igniubi.user.utils.PhoneUtil;
 import com.igniubi.model.CommonRsp;
-import com.igniubi.model.UserProfile;
 import com.igniubi.model.dtos.user.req.RegisterReqBO;
 import com.igniubi.model.dtos.user.req.UserProfileReqBO;
 import com.igniubi.model.enums.common.RedisKeyEnum;
 import com.igniubi.redis.operations.RedisValueOperations;
 import com.igniubi.redis.util.RedisOperationsUtil;
-import com.igniubi.service.IUserProfleService;
-import com.igniubi.utils.DateUtil;
-import com.igniubi.utils.PasswordUtil;
-import com.igniubi.utils.PhoneUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service
 public class UserProfileServiceImpl implements IUserProfleService {
 
     private final Logger logger = LoggerFactory.getLogger(UserProfileServiceImpl.class);
 
     @Autowired
-    IUserProfileDao userProfileDao;
+    IUserProfileMapper userProfileMapper;
 
     @Autowired
     RedisValueOperations valueOperations;
+
+
 
     @Override
     public CommonRsp register(RegisterReqBO registerReq) {
@@ -41,7 +43,7 @@ public class UserProfileServiceImpl implements IUserProfleService {
             rsp.setMessage("手机号不合法");
             return rsp;
         }
-        UserProfile profile = userProfileDao.selectUserByMobile(mobile);
+        UserProfile profile = userProfileMapper.selectUserByMobile(mobile);
         if(null!=profile){
             logger.warn("UserProfile has already existed, mobile is {}", mobile);
             rsp.setCode(203);
@@ -54,7 +56,7 @@ public class UserProfileServiceImpl implements IUserProfleService {
         newprofile.setCreateTime(DateUtil.getCurrentTimeSeconds());
         newprofile.setStatus(1);
         newprofile.setPassword(pwd);
-        userProfileDao.insertUser(newprofile);
+        userProfileMapper.insertUser(newprofile);
         logger.info("registerimpl register success, req is {}",registerReq);
         return rsp;
     }
@@ -65,7 +67,7 @@ public class UserProfileServiceImpl implements IUserProfleService {
         if(uid == null || uid <1 ){
             return null;
         }
-        UserProfile profile = RedisOperationsUtil.cacheObtain(valueOperations ,RedisKeyEnum.USER_PROFILE, uid, () ->userProfileDao.selectUserByPrimary(uid), UserProfile.class );
+        UserProfile profile = RedisOperationsUtil.cacheObtain(valueOperations ,RedisKeyEnum.USER_PROFILE, uid, () -> userProfileMapper.selectUserByPrimary(uid), UserProfile.class );
         logger.info("get profile success , profile is {}", profile);
         return profile;
     }

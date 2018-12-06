@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.igniubi.dao.IUserSessionDao">
-    <resultMap id="sessionMap" type="com.igniubi.model.UserSession">
-        <result property="id" column="id" jdbcType="INTEGER"/>
+<mapper namespace="com.igniubi.user.mapper.IUserSessionMapper">
+
+    <resultMap id="sessionMap" type="com.igniubi.user.model.UserSession">
         <result property="uid" column="uid" jdbcType="INTEGER"/>
         <result property="session_key" column="sessionKey" jdbcType="VARCHAR"/>
         <result property="last_time" column="lastTime" jdbcType="INTEGER"/>
         <result property="expire_time" column="expireTime" jdbcType="INTEGER"/>
     </resultMap>
+
     <sql id="Base_Column_List" >
-    id, uid, sessionKey, last_time, expire_time
-  </sql>
+      uid, session_key, last_time, expire_time
+    </sql>
+
+    <select id="get" resultMap="sessionMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_session
+        where uid = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="listAllUserSession" resultMap="sessionMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_session
+    </select>
 
     <select id="selectSessionByPrimary" resultMap="sessionMap">
         SELECT
@@ -27,13 +41,13 @@
         where session_key = #{sessionKey,jdbcType=VARCHAR}
     </select>
 
-    <insert id="insertUserSession"  parameterType="com.igniubi.model.UserSession">
+    <insert id="insertUserSession"  parameterType="com.igniubi.user.model.UserSession">
         insert into user_session(uid, session_key, last_time, expire_time)
           values (#{uid,jdbcType=INTEGER}, #{sessionKey,jdbcType=VARCHAR}, #{lastTime,jdbcType=INTEGER}, #{expireTime,jdbcType=INTEGER})
     </insert>
 
 
-    <update id="updateUserSesson"  parameterType="com.igniubi.model.UserSession">
+    <update id="updateUserSesson"  parameterType="com.igniubi.user.model.UserSession">
         update user_session
         <set >
             <if test="sessionKey != null" >
@@ -48,4 +62,5 @@
         </set>
         where uid = #{uid,jdbcType=INTEGER}
     </update>
+
 </mapper>

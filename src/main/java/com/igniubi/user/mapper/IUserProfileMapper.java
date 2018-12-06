@@ -1,9 +1,9 @@
-package com.igniubi.dao;
+package com.igniubi.user.mapper;
 
-import com.igniubi.model.UserProfile;
+import com.igniubi.user.model.UserProfile;
 import org.apache.ibatis.annotations.Param;
 
-public interface IUserProfileDao {
+public interface IUserProfileMapper {
 
     void insertUser(UserProfile profile);
 
