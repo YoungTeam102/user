@@ -1,6 +1,6 @@
 package com.igniubi.user.controller;
 
-import com.igniubi.model.dtos.user.req.SessionReqBO;
+import com.igniubi.model.user.req.SessionReqBO;
 import com.igniubi.user.service.IUserSessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

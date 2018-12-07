@@ -1,5 +1,7 @@
 package com.igniubi.user.service.impl;
 
+import com.igniubi.model.user.req.RegisterReqBO;
+import com.igniubi.model.user.req.UserProfileReqBO;
 import com.igniubi.user.mapper.IUserProfileMapper;
 import com.igniubi.user.model.UserProfile;
 import com.igniubi.user.service.IUserProfleService;
@@ -7,8 +9,6 @@ import com.igniubi.user.utils.DateUtil;
 import com.igniubi.user.utils.PasswordUtil;
 import com.igniubi.user.utils.PhoneUtil;
 import com.igniubi.model.CommonRsp;
-import com.igniubi.model.dtos.user.req.RegisterReqBO;
-import com.igniubi.model.dtos.user.req.UserProfileReqBO;
 import com.igniubi.model.enums.common.RedisKeyEnum;
 import com.igniubi.redis.operations.RedisValueOperations;
 import com.igniubi.redis.util.RedisOperationsUtil;
