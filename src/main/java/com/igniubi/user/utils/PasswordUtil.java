@@ -1,4 +1,4 @@
-package com.igniubi.utils;
+package com.igniubi.user.utils;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

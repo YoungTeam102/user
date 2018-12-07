@@ -1,7 +1,7 @@
-package com.igniubi.controller;
+package com.igniubi.user.controller;
 
 import com.igniubi.model.dtos.user.req.SessionReqBO;
-import com.igniubi.service.IUserSessionService;
+import com.igniubi.user.service.IUserSessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/sessionRest ")
+@RequestMapping("/sessionRest")
 public class SessionRest {
 
     private final Logger logger = LoggerFactory.getLogger(SessionRest.class);

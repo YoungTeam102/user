@@ -1,4 +1,4 @@
-package com.igniubi.utils;
+package com.igniubi.user.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
