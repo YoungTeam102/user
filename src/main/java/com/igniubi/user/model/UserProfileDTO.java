@@ -1,7 +1,7 @@
 package com.igniubi.user.model;
 
-import com.igniubi.user.utils.LoginGroup;
-import com.igniubi.user.utils.RegisterGroup;
+import com.igniubi.user.utils.groups.LoginGroup;
+import com.igniubi.user.utils.groups.RegisterGroup;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
