@@ -17,15 +17,10 @@ import com.igniubi.user.service.UserSessionService;
  * @version 1.0.0
  */
 @Service("userSessionService")
-public class UserSessionServiceImpl extends BaseServiceImpl<Long, UserSessionEntity> implements UserSessionService, InitializingBean {
+public class UserSessionServiceImpl implements UserSessionService{
 
 	@Autowired
 	private UserSessionMapper userSessionMapper;
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        this.setBaseMapper(userSessionMapper);
-    }
 
     /**
      * 根据userId 和 渠道号查

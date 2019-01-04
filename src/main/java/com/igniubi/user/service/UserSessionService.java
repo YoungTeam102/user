@@ -13,7 +13,7 @@ import com.igniubi.user.entity.UserSessionEntity;
  * @date 2019-01-03
  * @version 1.0.0
  */
-public interface UserSessionService extends BaseService<Long, UserSessionEntity> {
+public interface UserSessionService  {
 
     /**
      * 根据userId 和 渠道号查

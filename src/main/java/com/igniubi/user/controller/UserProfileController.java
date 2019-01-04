@@ -35,7 +35,7 @@ public class UserProfileController {
      * @throws IGNBException
      */
     @PostMapping("/getUserProfile")
-    public ResultDTO getUserProfile(@RequestBody  UserProfileDTO userProfileDTO) throws IGNBException {
+    public ResultDTO getUserProfile(@RequestBody UserProfileDTO userProfileDTO) throws IGNBException {
         return new ResultDTO.ResultDTOBuilder().data(userProfileService.getUserProfile(userProfileDTO)).build();
     }
 

@@ -1,11 +1,9 @@
 package com.igniubi.user.business.impl;
-import java.util.Date;
 import java.util.UUID;
 
 import com.igniubi.common.exceptions.IGNBException;
 import com.igniubi.model.dtos.common.ResultDTO;
 import com.igniubi.model.enums.common.RedisKeyEnum;
-import com.igniubi.model.enums.common.ResultEnum;
 import com.igniubi.model.user.constants.UserConstant;
 import com.igniubi.model.user.enums.UserExceptionEnum;
 import com.igniubi.redis.operations.RedisValueOperations;
@@ -16,10 +14,9 @@ import com.igniubi.user.entity.UserProfileEntity;
 import com.igniubi.user.entity.UserSessionEntity;
 import com.igniubi.user.mapper.UserInfoMapper;
 import com.igniubi.user.mapper.UserProfileMapper;
+import com.igniubi.user.mapper.UserSessionMapper;
 import com.igniubi.user.model.UserProfileDTO;
-import com.igniubi.user.service.UserInfoService;
 import com.igniubi.user.service.UserProfileService;
-import com.igniubi.user.service.UserSessionService;
 import com.igniubi.user.utils.PasswordUtil;
 import com.igniubi.user.utils.PhoneUtil;
 import org.springframework.beans.BeanUtils;
@@ -44,11 +41,11 @@ public class UserBusinessServiceImpl implements UserBusinessService {
     private UserInfoMapper userInfoMapper;
 
     @Autowired
+    private UserSessionMapper userSessionMapper;
+
+    @Autowired
     private UserProfileService userProfileService;
-    @Autowired
-    private UserSessionService userSessionService;
-    @Autowired
-    private UserInfoService userInfoService;
+
     @Autowired
     private RedisValueOperations redisTemplate;
 
@@ -98,11 +95,10 @@ public class UserBusinessServiceImpl implements UserBusinessService {
      * 会员登陆
      * <p>
      *
-     * @param userProfileDTO
-     * @return
-     * @throws IGNBException
+     * @param userProfileDTO @description
+     * @return ResultDTO
+     * @throws IGNBException @description
      * @author  徐擂
-     * @date    2019-1-4
      */
     @Override
     public ResultDTO doLogin(UserProfileDTO userProfileDTO) throws IGNBException{
@@ -120,20 +116,20 @@ public class UserBusinessServiceImpl implements UserBusinessService {
 
         // 保存会话信息
         Integer channel = userProfileDTO.getChannel();
-        UserSessionEntity userSessionEntity = userSessionService.getUserSessionByChannel(userProfileEntity.getId(), channel);
+        UserSessionEntity userSessionEntity = userSessionMapper.getUserSessionByParam(new UserSessionEntity(userProfileDTO.getId(), channel));
         if (userSessionEntity == null) {
             userSessionEntity = new UserSessionEntity();
             userSessionEntity.setUserId(userProfileEntity.getId());
             userSessionEntity.setSessionKey(token);
             userSessionEntity.setChannel(channel);
             userSessionEntity.setExpireTime((int) RedisKeyEnum.USER_SESSION.getTimeUnit().toSeconds(RedisKeyEnum.USER_SESSION.getCacheTime()));
-            userSessionService.save(userSessionEntity);
+            userSessionMapper.save(userSessionEntity);
         } else {
             userSessionEntity.setLastTime(null);
             userSessionEntity.setSessionKey(token);
-            userSessionService.update(userSessionEntity);
+            userSessionMapper.update(userSessionEntity);
         }
-        return new ResultDTO(token);
+        return new ResultDTO.ResultDTOBuilder().data(token).build();
     }
 
     private String generateToken(){ return UUID.randomUUID().toString();    }
