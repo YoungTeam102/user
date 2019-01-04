@@ -4,7 +4,7 @@ import com.igniubi.common.exceptions.IGNBException;
 import com.igniubi.model.dtos.common.ResultDTO;
 import com.igniubi.user.business.UserBusinessService;
 import com.igniubi.user.model.UserProfileDTO;
-import com.igniubi.user.utils.RegisterGroup;
+import com.igniubi.user.utils.groups.RegisterGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
