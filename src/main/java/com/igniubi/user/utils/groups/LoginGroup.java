@@ -1,4 +1,4 @@
-package com.igniubi.user.utils;
+package com.igniubi.user.utils.groups;
 
 /**
  * 用于标识登陆操作
