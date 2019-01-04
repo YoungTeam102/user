@@ -21,7 +21,7 @@ public class PasswordUtil {
 
     public static String makePassword(String code,String rmd){
         String crypt = string2MD5(code + rmd);
-        return crypt + ":" + rmd;
+        return crypt ;
     }
 
     /**
@@ -117,7 +117,7 @@ public class PasswordUtil {
      * @param encryptPassword 数据库密码
      * @return
      */
-    private boolean validata(String inputPassword, String encryptPassword) {
+    private static  boolean validata(String inputPassword, String encryptPassword) {
         if (StringUtils.isEmpty(encryptPassword)) {
             return false;
         }
@@ -133,7 +133,6 @@ public class PasswordUtil {
         String md5passSso = makePassword(inputPassword , rdm);
         //(2)与sso加密方式的密码进行对比
         if (crypt.equals(md5passSso)) {
-            logger.info("validate:compare with sso md5.");
             return true;
         }
 
@@ -142,5 +141,6 @@ public class PasswordUtil {
 
     public static void main(String[] args){
         System.out.println(makePass("abc123"));
+        System.out.println(validata("abc123",makePass("abc123")));
     }
 }
