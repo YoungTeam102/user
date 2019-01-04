@@ -14,6 +14,8 @@ import com.igniubi.user.business.UserBusinessService;
 import com.igniubi.user.entity.UserInfoEntity;
 import com.igniubi.user.entity.UserProfileEntity;
 import com.igniubi.user.entity.UserSessionEntity;
+import com.igniubi.user.mapper.UserInfoMapper;
+import com.igniubi.user.mapper.UserProfileMapper;
 import com.igniubi.user.model.UserProfileDTO;
 import com.igniubi.user.service.UserInfoService;
 import com.igniubi.user.service.UserProfileService;
@@ -34,6 +36,12 @@ import org.springframework.stereotype.Service;
  */
 @Service("userBusinessService")
 public class UserBusinessServiceImpl implements UserBusinessService {
+
+    @Autowired
+    private UserProfileMapper userProfileMapper;
+
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     @Autowired
     private UserProfileService userProfileService;
@@ -70,7 +78,7 @@ public class UserBusinessServiceImpl implements UserBusinessService {
         // 3.加密注册
         BeanUtils.copyProperties(userProfileDTO, userProfileEntity = new UserProfileEntity());
         userProfileEntity.setPassword(PasswordUtil.makePass(userProfileEntity.getPassword()));
-        userProfileService.save(userProfileEntity);
+        userProfileMapper.save(userProfileEntity);
 
         // 4.生成用户基本信息
         userProfileEntity = userProfileService.getByPhoneNo(userProfileDTO.getPhoneNo());
@@ -81,7 +89,7 @@ public class UserBusinessServiceImpl implements UserBusinessService {
         userInfoEntity.setMotto(UserConstant.USER_DEFAULT_MOTTO);
         userInfoEntity.setAge(UserConstant.USER_DEFAULT_AGE);
         userInfoEntity.setGender(UserConstant.USER_DEFAULT_GENDER);
-        userInfoService.save(userInfoEntity);
+        userInfoMapper.save(userInfoEntity);
 
         return new ResultDTO();
     }

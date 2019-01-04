@@ -12,6 +12,6 @@ import com.igniubi.user.entity.UserInfoEntity;
  * @date 2019-01-03
  * @version 1.0.0
  */
-public interface UserInfoService extends BaseService<Long, UserInfoEntity> {
+public interface UserInfoService {
 
 }

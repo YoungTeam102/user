@@ -17,13 +17,10 @@ import com.igniubi.user.service.UserInfoService;
  * @version 1.0.0
  */
 @Service("userInfoService")
-public class UserInfoServiceImpl extends BaseServiceImpl<Long, UserInfoEntity> implements UserInfoService, InitializingBean {
+public class UserInfoServiceImpl  implements UserInfoService{
 
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        this.setBaseMapper(userInfoMapper);
-    }
+
 }

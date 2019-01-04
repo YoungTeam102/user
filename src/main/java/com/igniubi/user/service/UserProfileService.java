@@ -2,6 +2,7 @@ package com.igniubi.user.service;
 
 import com.igniubi.mybatis.service.BaseService;
 import com.igniubi.user.entity.UserProfileEntity;
+import com.igniubi.user.model.UserProfileDTO;
 
 
 /**
@@ -12,7 +13,7 @@ import com.igniubi.user.entity.UserProfileEntity;
  * @date 2019-01-03
  * @version 1.0.0
  */
-public interface UserProfileService extends BaseService<Long, UserProfileEntity> {
+public interface UserProfileService   {
 
     /**
      * 根据手机号查询
@@ -24,4 +25,6 @@ public interface UserProfileService extends BaseService<Long, UserProfileEntity>
      * @date    2019-1-4
      */
     UserProfileEntity getByPhoneNo(String phoneNo);
+
+    UserProfileEntity getUserProfile(UserProfileDTO userProfileDTO);
 }

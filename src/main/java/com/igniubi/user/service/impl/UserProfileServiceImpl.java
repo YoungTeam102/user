@@ -1,6 +1,9 @@
 package com.igniubi.user.service.impl;
 
 import com.igniubi.mybatis.service.impl.BaseServiceImpl;
+import com.igniubi.redis.util.RedisOperationsUtil;
+import com.igniubi.user.model.UserProfileDTO;
+import com.igniubi.user.service.proxy.UserProfileProxyService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,15 +20,13 @@ import com.igniubi.user.service.UserProfileService;
  * @version 1.0.0
  */
 @Service("userProfileService")
-public class UserProfileServiceImpl extends BaseServiceImpl<Long, UserProfileEntity> implements UserProfileService, InitializingBean {
+public class UserProfileServiceImpl implements UserProfileService {
 
 	@Autowired
 	private UserProfileMapper userProfileMapper;
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        this.setBaseMapper(userProfileMapper);
-    }
+    @Autowired
+    private UserProfileProxyService userProfileProxyService;
 
     /**
      * 根据手机号查询
@@ -36,8 +37,13 @@ public class UserProfileServiceImpl extends BaseServiceImpl<Long, UserProfileEnt
      * @author  徐擂
      * @date    2019-1-4
      */
-    @Override
     public UserProfileEntity getByPhoneNo(String phoneNo){
         return userProfileMapper.getByPhoneNo(phoneNo);
+    }
+
+
+    @Override
+    public UserProfileEntity getUserProfile(UserProfileDTO userProfileDTO) {
+        return userProfileProxyService.getUserProfile(userProfileDTO.getId());
     }
 }
