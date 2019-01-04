@@ -1,45 +1,85 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.igniubi.user.mapper.IUserProfileMapper">
-    <resultMap id="userMap" type="com.igniubi.user.model.UserProfile">
-        <result property="uid" column="uid" jdbcType="INTEGER"/>
-        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
-        <result property="email" column="email" jdbcType="VARCHAR"/>
-        <result property="password" column="password" jdbcType="VARCHAR"/>
-        <result property="update_time" column="updateTime" jdbcType="INTEGER"/>
-        <result property="create_time" column="createTime" jdbcType="INTEGER"/>
-        <result property="status" column="status" jdbcType="TINYINT"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igniubi.user.mapper.UserProfileMapper">
+
+    <!-- 可根据自己的需求，进行增减 -->
+
+    <resultMap type="com.igniubi.user.entity.UserProfileEntity" id="userProfileMap">
+        <result property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="phoneNo" column="phone_no"/>
+        <result property="password" column="password"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
     </resultMap>
-    <sql id="Base_Column_List" >
-    uid, mobile, email, password, update_time, create_time,status
-  </sql>
 
-    <select id="selectUserByPrimary" resultMap="userMap">
-        SELECT
-        <include refid="Base_Column_List"></include>
-        FROM user_profile
-        where uid = #{uid,jdbcType=INTEGER}
+    <sql id="userProfileQuerySql">
+		t.id, 
+		t.email, 
+		t.phone_no, 
+		t.password, 
+		t.create_time, 
+		t.update_time, 
+		t.status
+    </sql>
+
+    <!-- 增 -->
+	<insert id="save" parameterType="com.igniubi.user.entity.UserProfileEntity" useGeneratedKeys="true" keyProperty="$pk.attrname">
+		insert into user_profile
+		(
+			`email`, 
+			`phone_no`, 
+			`password`
+		)
+		values
+		(
+			#{email}, 
+			#{phoneNo}, 
+			#{password}
+		)
+	</insert>
+
+    <!-- 删 -->
+    <update id="remove">
+        update user_profile t
+        <set>
+            t.deleted = 1
+        </set>
+        where
+			id = #{${pk.attrname}}
+    </update>
+
+    <!-- 改 -->
+	<update id="update" parameterType="com.igniubi.user.entity.UserProfileEntity">
+		update user_profile t
+		<set>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="phoneNo != null">`phone_no` = #{phoneNo}, </if>
+			<if test="password != null">`password` = #{password}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{$pk.attrname}
+	</update>
+
+	<!-- 查 -->
+    <select id="get" resultMap="userProfileMap">
+        select
+        	<include refid="userProfileQuerySql"/>
+        from user_profile t
+        where
+        	id = #{$pk.attrname}
     </select>
 
-    <select id="selectUserByMobile" resultMap="userMap">
-        SELECT
-        <include refid="Base_Column_List"></include>
-        FROM user_profile
-        where mobile = #{mobile,jdbcType=VARCHAR}
+	<!-- 根据手机号查 -->
+    <select id="getByPhoneNo" resultMap="userProfileMap" parameterType="java.lang.String">
+        select
+        	<include refid="userProfileQuerySql"/>
+        from user_profile t
+        where
+        	phone_no = #{phoneNo}
     </select>
-
-    <insert id="insertUser" useGeneratedKeys="true" keyProperty="uid" parameterType="com.igniubi.user.model.UserProfile">
-        insert into user_profile(mobile, email, password, create_time,status)
-          values (#{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{createTime,jdbcType=INTEGER},#{status,jdbcType=INTEGER})
-    </insert>
-
-
-    <!--<insert id="inserBatch"  parameterType="java.util.List">-->
-        <!--insert into user (id,name,age,gender,mobile)-->
-        <!--values-->
-        <!--<foreach collection="list" item="item" separator=",">-->
-            <!--(#{item.id},#{item.name},#{item.age},#{item.gender},#{item.mobile})-->
-        <!--</foreach>-->
-    <!--</insert>-->
 </mapper>

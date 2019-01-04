@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igniubi.user.mapper.UserInfoMapper">
+
+    <!-- 可根据自己的需求，进行增减 -->
+
+    <resultMap type="com.igniubi.user.entity.UserInfoEntity" id="userInfoMap">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="realName" column="real_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="motto" column="motto"/>
+        <result property="age" column="age"/>
+        <result property="gender" column="gender"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="userInfoQuerySql">
+		t.id, 
+		t.user_id, 
+		t.real_name, 
+		t.nick_name, 
+		t.motto, 
+		t.age, 
+		t.gender,
+		t.create_time,
+		t.update_time
+    </sql>
+
+    <!-- 增 -->
+	<insert id="save" parameterType="com.igniubi.user.entity.UserInfoEntity" useGeneratedKeys="true" keyProperty="$pk.attrname">
+		insert into user_info
+		(
+			`user_id`, 
+			`real_name`, 
+			`nick_name`, 
+			`motto`, 
+			`age`, 
+			`gender`
+		)
+		values
+		(
+			#{userId}, 
+			#{realName}, 
+			#{nickName}, 
+			#{motto}, 
+			#{age}, 
+			#{gender}
+		)
+	</insert>
+
+    <!-- 删 -->
+    <update id="remove">
+        update user_info t
+        <set>
+            t.deleted = 1
+        </set>
+        where
+			id = #{${pk.attrname}}
+    </update>
+
+    <!-- 改 -->
+	<update id="update" parameterType="com.igniubi.user.entity.UserInfoEntity">
+		update user_info t
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="realName != null">`real_name` = #{realName}, </if>
+			<if test="nickName != null">`nick_name` = #{nickName}, </if>
+			<if test="motto != null">`motto` = #{motto}, </if>
+			<if test="age != null">`age` = #{age}, </if>
+			<if test="gender != null">`gender` = #{gender}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where id = #{$pk.attrname}
+	</update>
+
+	<!-- 查 -->
+    <select id="get" resultMap="userInfoMap">
+        select
+        	<include refid="userInfoQuerySql"/>
+        from user_info t
+        where
+        	id = #{$pk.attrname}
+    </select>
+</mapper>

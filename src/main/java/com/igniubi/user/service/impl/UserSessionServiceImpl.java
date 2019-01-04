@@ -1,42 +1,44 @@
 package com.igniubi.user.service.impl;
 
-
-import com.igniubi.user.service.IUserSessionService;
-import com.igniubi.user.mapper.IUserSessionMapper;
-import com.igniubi.model.enums.common.RedisKeyEnum;
-import com.igniubi.redis.operations.RedisValueOperations;
-import com.igniubi.redis.util.RedisOperationsUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.igniubi.mybatis.service.impl.BaseServiceImpl;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import com.igniubi.user.mapper.UserSessionMapper;
+import com.igniubi.user.entity.UserSessionEntity;
+import com.igniubi.user.service.UserSessionService;
 
-@Component
-public class UserSessionServiceImpl implements IUserSessionService {
+/**
+ * 用户session信息
+ * <p>
+ *
+ * @author 迈克擂
+ * @date 2019-01-03
+ * @version 1.0.0
+ */
+@Service("userSessionService")
+public class UserSessionServiceImpl extends BaseServiceImpl<Long, UserSessionEntity> implements UserSessionService, InitializingBean {
 
-    private final Logger logger = LoggerFactory.getLogger(UserSessionServiceImpl.class);
-
-    @Autowired
-    private RedisValueOperations redisValueOperations;
-
-    @Autowired
-    private IUserSessionMapper userSessionMapper;
+	@Autowired
+	private UserSessionMapper userSessionMapper;
 
     @Override
-    public Integer getUid(String sessionKey) {
-        logger.info(" UserSessionServiceImpl getUid , sessionKey is {}", sessionKey);
-//        RedisKeyBuilder keyBuilder = RedisKeyBuilder.newInstance().appendFixed(RedisKeyEnum.USER_SESSION.getCacheKey()).appendFixed(sessionKey);
-//        Integer uid = redisValueOperations.get(keyBuilder, Integer.class);
-//        if(uid != null){
-//            return uid;
-//        }
-//
-//        uid = userSessionDao.selectUid(sessionKey);
-//        if(uid != null){
-//            redisValueOperations.set(keyBuilder, uid,RedisKeyEnum.USER_SESSION.getCacheTime(), RedisKeyEnum.USER_SESSION.getTimeUnit() );
-//        }
-        Integer uid = RedisOperationsUtil.cacheObtain(redisValueOperations, RedisKeyEnum.USER_SESSION, sessionKey, () ->userSessionMapper.selectUid(sessionKey), Integer.class);
-        logger.info(" UserSessionServiceImpl getUid success , sessionKey is {}, uid is {}", sessionKey, uid);
-        return uid;
+    public void afterPropertiesSet() throws Exception {
+        this.setBaseMapper(userSessionMapper);
+    }
+
+    /**
+     * 根据userId 和 渠道号查
+     * <p>
+     *
+     * @param userId
+     * @param channel
+     * @return UserSessionEntity
+     * @author  徐擂
+     * @date    2019-1-4
+     */
+    @Override
+    public UserSessionEntity getUserSessionByChannel(Long userId, Integer channel){
+        return userSessionMapper.getUserSessionByParam(new UserSessionEntity(userId, channel));
     }
 }

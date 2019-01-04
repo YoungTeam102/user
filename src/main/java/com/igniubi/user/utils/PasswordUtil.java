@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public class PasswordUtil {
 
-    private final Logger logger = LoggerFactory.getLogger(PasswordUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(PasswordUtil.class);
 
     public static String makePass(String code) {
         String rmd = getRandomString(32);
@@ -117,7 +117,7 @@ public class PasswordUtil {
      * @param encryptPassword 数据库密码
      * @return
      */
-    private static  boolean validata(String inputPassword, String encryptPassword) {
+    public static boolean validate(String inputPassword, String encryptPassword) {
         if (StringUtils.isEmpty(encryptPassword)) {
             return false;
         }
@@ -133,6 +133,7 @@ public class PasswordUtil {
         String md5passSso = makePassword(inputPassword , rdm);
         //(2)与sso加密方式的密码进行对比
         if (crypt.equals(md5passSso)) {
+            logger.info("validate:compare with sso md5.");
             return true;
         }
 
@@ -140,7 +141,6 @@ public class PasswordUtil {
     }
 
     public static void main(String[] args){
-        System.out.println(makePass("abc123"));
-        System.out.println(validata("abc123",makePass("abc123")));
+        System.out.println(makePass("123qwe"));
     }
 }
